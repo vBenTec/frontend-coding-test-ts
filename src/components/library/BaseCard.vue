@@ -47,14 +47,11 @@ withDefaults(defineProps<Props>(), {
   }
 
   &__side {
+    @apply top-0 left-0 absolute rounded-lg overflow-hidden;
     transition: all .8s ease;
-    position: absolute;
-    top: 0;
-    left: 0;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     border-radius: 3px;
-    overflow: hidden;
     box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, .15);
 
     &.size {
@@ -76,13 +73,11 @@ withDefaults(defineProps<Props>(), {
 
     &--front {
       @apply rounded-lg p-4;
-      background-color: white;
     }
 
     &--back {
       @apply rounded-lg p-4;
       transform: rotateY(180deg);
-      background-image: linear-gradient(to right bottom, #fff, #eee);
     }
   }
 }

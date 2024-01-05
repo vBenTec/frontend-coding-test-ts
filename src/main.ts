@@ -11,6 +11,16 @@ import {
   GiBroadsword,
   GiShield,
   GiSpeedometer,
+  GiFire,
+  GiFlyingTrout,
+  GiEarthCrack,
+  GiWaterDrop,
+  GiGrass,
+  GiPoison,
+  GiHighGrass,
+  GiBugNet,
+  MdCatchingpokemonTwotone,
+
 } from 'oh-vue-icons/icons'
 // Import the CSS or use your own!
 import 'vue-toastification/dist/index.css'
@@ -20,7 +30,7 @@ const app = createApp(App)
 //  Global components
 app.component('base-icon', OhVueIcon)
 
-addIcons(GiHealthPotion, GiSwordsPower, GiEggDefense, GiSpeedometer, GiBroadsword, GiShield)
+addIcons(MdCatchingpokemonTwotone,GiBugNet, GiHighGrass, GiGrass, GiPoison, GiWaterDrop, GiEarthCrack, GiFlyingTrout, GiHealthPotion, GiSwordsPower, GiEggDefense, GiSpeedometer, GiBroadsword, GiShield, GiFire)
 
 app.use(Toast, {
   position: POSITION.TOP_RIGHT,

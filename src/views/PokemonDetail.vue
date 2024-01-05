@@ -1,6 +1,10 @@
 <script setup lang="ts">
+// ************* import COMPONENTS ************* //
+
+// ************* UTILS ************* //
 import { ref } from 'vue'
 import { useApi } from '@/composables/useApi'
+
 import api from '@api/pokemon.ts'
 import { onBeforeRouteUpdate } from 'vue-router'
 import PokemonCard from '@/components/pokemon/PokemonCard.vue'
@@ -9,7 +13,6 @@ import BaseSwitch from '@/components/library/BaseSwitch.vue'
 import type { Pokemon } from '@/types/pokemonApi'
 
 // ************* TYPES ************* //
-
 
 interface Props {
   id: string
@@ -40,11 +43,13 @@ onBeforeRouteUpdate(async (to) => {
 </script>
 
 <template>
-  <section class="max-w-lg flex flex-col items-center">
-    <base-switch class="mb-8" label="Disable backside of card" v-model="frontSideOnly" />
-    <pokemon-card v-if="activePokemon" :front-side-only="frontSideOnly" v-bind="activePokemon" />
-    <loading-spinner v-else-if="isFetching" />
-    <p v-else>Could not get pokemon !</p>
+  <section class="flex flex-col items-center">
+    <base-switch class="mb-8" label="Don't show backside of card" v-model="frontSideOnly" />
+    <transition name="fade" appear>
+      <pokemon-card class="w-[30rem] h-[50rem] !shadow-none" v-if="activePokemon && !isFetching" :front-side-only="frontSideOnly" v-bind="activePokemon" />
+      <loading-spinner v-else-if="isFetching" />
+      <p v-else>Could not get pokemon !</p>
+    </transition>
   </section>
 </template>
 

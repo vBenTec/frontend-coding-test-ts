@@ -1,11 +1,16 @@
 <script setup lang="ts">
+// ************* import COMPONENTS ************* //
 import BaseList from '@/components/library/BaseList.vue'
-import api from '@api/pokemon.ts'
-import { computed, onMounted, ref } from 'vue'
-import { useApi } from '@/composables/useApi.ts'
 import PokemonItem from '@/components/pokemon/PokemonItem.vue'
+import LoadingSpinner from '@/components/library/LoadingSpinner.vue'
+// ************* import COMPOSABLES ************* //
+import api from '@api/pokemon.ts'
+import { useApi } from '@/composables/useApi.ts'
+// ************* import UTILS & HELPERS ************* //
+import { computed, onMounted, ref } from 'vue'
 import { addIcons } from 'oh-vue-icons'
 
+// ************* Options ************* //
 defineOptions({
   components: {
     PokemonItem,
@@ -63,10 +68,16 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section>
+  <section class="px-4 flex flex-col items-center">
     <h1 class="mb-8">A list of available Pokemon's</h1>
-    <base-list class="max-w-6xl mb-8" :items="computedPokemonList" />
-    <router-view />
+    <base-list v-if="!isFetching" class="max-w-7xl mb-8" :items="computedPokemonList" />
+    <loading-spinner v-if="isFetching" />
+    <p v-if="error && !isFetching">Could not get pokemon list !</p>
+    <router-view v-slot="{ Component }">
+      <transition mode="out-in" name="fade">
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </section>
 </template>
 

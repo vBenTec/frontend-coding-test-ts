@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { Pokemon } from '@/types/pokemonApi.ts'
 import BaseCard from '@/components/library/BaseCard.vue'
+import CardFrontside from '@/components/pokemon/PokemonCard/CardFrontside.vue'
+import CardBackside from '@/components/pokemon/PokemonCard/CardBackside.vue'
 
 interface Image {
   [key: string]: string;
@@ -45,61 +47,50 @@ const getIcon = (name: Name) => {
       return 'gi-speedometer'
   }
 }
+
+const getTypeIcon = (type: string) => {
+  switch (type) {
+    case 'water':
+      return 'gi-water-drop'
+    case 'earth':
+      return 'gi-earth-crack'
+    case 'flying':
+      return 'gi-flying-trout'
+    case 'grass':
+      return 'gi-grass'
+    case 'poison':
+      return 'gi-poison'
+    case 'fire':
+      return 'gi-fire'
+    case 'bug':
+      return 'gi-bug-net'
+    case 'normal':
+      return 'md-catchingpokemon-twotone'
+  }
+}
+
+const getTypes = (types) => {
+  const newTypes = []
+  types.forEach(({ type }) => {
+    if (['earth', 'water', 'flying', 'fire', 'grass', 'normal', 'bug', 'poison'].includes(type.name)) {
+      newTypes.push({
+        type: type.name,
+        icon: getTypeIcon(type.name),
+      })
+    }
+  })
+  return newTypes
+}
 </script>
 
 <template>
   <base-card class="pokemon-card" :disable-hover="frontSideOnly" size="lg">
     <template #front-side>
-      <header class="flex justify-between">
-        <h2 class="uppercase">{{ species.name }}</h2>
-        <div><span class="font-medium text-[0.6rem]">Exp</span> <span class="text-xl font-bold">{{ base_experience
-          }}</span></div>
-      </header>
-      <div class="flex justify-center border rounded-lg mb-6" role="list">
-        <div role="listitem" class="h-40" v-for="(value, key) in getImages(sprites, 'front')" :key="key">
-          <img class="w-full h-full object-center block" :src="value" alt="back">
-        </div>
-      </div>
-      <div class="bg-logo-yellowish-dark rounded-lg p-4">
-        <ul class="mx-auto max-w-[15rem] font-bold text-gray-900">
-          <li v-for="(stat, index) in stats" :key="stat.base_stat + index">
-            <dl class="flex justify-between">
-              <dt class="flex items-center gap-2">
-                <base-icon class="text-gray-700" scale="1.5" :name="getIcon(stat.stat['name'])" />
-                <span>
-              {{ stat.stat['name'][0].toUpperCase() + stat.stat['name'].slice(1) }}
-              </span>
-              </dt>
-              <dd>{{ stat.base_stat }}</dd>
-            </dl>
-          </li>
-        </ul>
-      </div>
-
-      <footer>
-
-      </footer>
+      <card-frontside v-bind="props" />
     </template>
 
     <template #back-side>
-      <h2 class="uppercase">Backside</h2>
-      <div class="flex justify-center border rounded-lg" role="list">
-        <div role="listitem" class="h-40" v-for="(value, key) in getImages(sprites, 'back')" :key="key">
-          <img class="w-full h-full object-center block" :src="value" alt="back">
-        </div>
-      </div>
-      <dl>
-        <dt>Height</dt>
-        <dd>{{ height }}</dd>
-        <dt>Weight</dt>
-        <dd>{{ weight }}</dd>
-      </dl>
-      <ul class="max-h-48 overflow-auto">
-        <li v-for="(m, index) in moves" :key="m.move + index">{{ m.move.name }}</li>
-      </ul>
-      <ul>
-        <li v-for="(a, index) in abilities" :key="a.ability.name + index">{{ a.ability.name }}</li>
-      </ul>
+      <card-backside v-bind="props" />
     </template>
   </base-card>
 </template>
@@ -107,7 +98,7 @@ const getIcon = (name: Name) => {
 <style scoped lang="postcss">
 .pokemon-card {
   :deep(.card__side) {
-    @apply outline outline-8 outline-gray-300 bg-gradient-to-br from-logo-yellowish-base to-logo-yellowish-light;
+    @apply flex flex-col outline outline-8 outline-gray-300 bg-gradient-to-br from-logo-yellowish-base to-logo-yellowish-light;
   }
 }
 </style>

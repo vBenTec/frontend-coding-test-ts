@@ -24,13 +24,13 @@ const frontSideOnly = ref<boolean>(false)
 
 const { callApi, isFetching } = useApi()
 
-onBeforeRouteUpdate(async () => {
+onBeforeRouteUpdate(async (to) => {
   const res = await callApi(() => {
-    return api.getPokemon(props.id)
+    return api.getPokemon(to.params.id)
   }, {
-    successMsg: `Pokemon ${props.id} loaded`,
-    errorMsg: `💥Pokemon ${props.id} could not get loaded. Please try again later.`,
-    cache: { id: 'pokemon-' + props.id },
+    successMsg: `Pokemon ${to.params.id} loaded`,
+    errorMsg: `💥Pokemon ${to.params.id} could not get loaded. Please try again later.`,
+    cache: { id: 'pokemon-' + to.params.id },
   })
   if (res.status === 200) {
     activePokemon.value = res.data

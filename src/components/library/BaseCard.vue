@@ -14,7 +14,7 @@ withDefaults(defineProps<Props>(), {
 
 <template>
   <component :is="tag" class="card"
-             :class="[{'card--interactive': $slots['front-side']()?.length > 0 && $slots['back-side']()?.length > 0}, {'card--interactive-hover': !disableHover}]">
+             :class="[{'card--interactive':  ($slots['front-side']&& $slots['front-side']()?.length > 0) && ($slots['back-side']&& $slots['back-side']()?.length > 0)}, {'card--interactive-hover': !disableHover}]">
     <slot>
       <div class="card__side card__side--front" :class="[size? `size--${size}`: '' ]">
         <slot name="front-side" />
@@ -55,7 +55,7 @@ withDefaults(defineProps<Props>(), {
     backface-visibility: hidden;
     border-radius: 3px;
     overflow: hidden;
-    box-shadow: 0 1.5rem 4rem rgba(#000, .15);
+    box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, .15);
 
     &.size {
       &--sm {

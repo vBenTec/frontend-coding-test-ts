@@ -4,6 +4,7 @@ import api from '@api/pokemon.ts'
 import { computed, onMounted, ref } from 'vue'
 import { useApi } from '@/composables/useApi.ts'
 import PokemonItem from '@/components/pokemon/PokemonItem.vue'
+import { addIcons } from 'oh-vue-icons'
 
 defineOptions({
   components: {
@@ -12,21 +13,27 @@ defineOptions({
 })
 
 const pokemonList = ref<{ name: string, url: string }[]>([])
+const pokemonIconList = ref([])
 
-const computedPokemonList = computed(() => pokemonList.value.map((item) => ({
-  id: item.name + Math.random() * 1000,
-  component: PokemonItem,
-  link: {
-    name: 'PokemonDetail',
-    params: {
-      id: item.name,
+const computedPokemonList = computed(() => {
+  // Create dependency to update when icons are resolved
+  // Only use-case !
+  return pokemonIconList.value ? pokemonList.value.map((item) => ({
+    id: item.name + Math.random() * 1000,
+    component: PokemonItem,
+    link: {
+      name: 'PokemonDetail',
+      params: {
+        id: item.name,
+      },
     },
-  },
-  attrs: {
-    name: item.name,
-    url: item.url,
-  },
-})))
+    attrs: {
+      icon: `pi-${item.name}`,
+      name: item.name,
+      url: item.url,
+    },
+  })) : []
+})
 
 const { isFetching, error, callApi } = useApi()
 
@@ -40,7 +47,17 @@ onMounted(async () => {
 
   if (res.status === 200) {
     pokemonList.value = res.data.results
+    const icons = await import(`oh-vue-icons/icons`)
+
+    const iconList = pokemonList.value.map((pokemon) => {
+      const iconName = `Pi${pokemon.name[0].toUpperCase() + pokemon.name.slice(1)}`
+      return icons[iconName]
+    })
+    addIcons(...iconList)
+    // Just used to create a dependency to recompute when icons are resolved
+    pokemonIconList.value = iconList
   }
+
 })
 
 </script>

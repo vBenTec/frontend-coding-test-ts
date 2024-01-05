@@ -9,4 +9,8 @@
     h1 {
         @apply font-extrabold tracking-tight text-3xl leading-10
     }
+
+    h2 {
+        @apply font-bold tracking-tight text-2xl
+    }
 }

@@ -3,8 +3,10 @@ import { onMounted, ref } from 'vue'
 import { useApi } from '@/composables/useApi'
 import api from '@api/pokemon.ts'
 import { onBeforeRouteUpdate } from 'vue-router'
+import PokemonCard from '@/components/pokemon/PokemonCard.vue'
+import LoadingSpinner from '@/components/library/LoadingSpinner.vue'
+import BaseSwitch from '@/components/library/BaseSwitch.vue'
 import type { Pokemon } from '@/types/pokemonApi'
-import BaseList from '@/components/library/BaseList.vue'
 
 // ************* TYPES ************* //
 
@@ -18,8 +20,9 @@ const props = defineProps<Props>()
 
 // ************* local STATE ************* //
 const activePokemon = ref<Pokemon>()
+const frontSideOnly = ref<boolean>(false)
 
-const { callApi } = useApi()
+const { callApi, isFetching } = useApi()
 
 onBeforeRouteUpdate(async () => {
   const res = await callApi(() => {
@@ -37,17 +40,11 @@ onBeforeRouteUpdate(async () => {
 </script>
 
 <template>
-  <section class="max-w-lg">
-    <div v-if="activePokemon">
-      <h2>{{ activePokemon?.species?.name }}</h2>
-      <ul>
-        <li v-for="(a, index) in activePokemon.abilities" :key="a + index">{{ a.ability.name }}</li>
-      </ul>
-
-      <pre>
-      {{ activePokemon }}
-    </pre>
-    </div>
+  <section class="max-w-lg flex flex-col items-center">
+    <base-switch class="mb-8" label="Disable backside of card" v-model="frontSideOnly" />
+    <pokemon-card v-if="activePokemon" :front-side-only="frontSideOnly" v-bind="activePokemon" />
+    <loading-spinner v-else-if="isFetching" />
+    <p v-else>Could not get pokemon !</p>
   </section>
 </template>
 

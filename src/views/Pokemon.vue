@@ -47,8 +47,8 @@ onMounted(async () => {
 
 <template>
   <section>
-    <h1>A list of available Pokemon's</h1>
-    <base-list class="max-w-2xl" :items="computedPokemonList" />
+    <h1 class="mb-8">A list of available Pokemon's</h1>
+    <base-list class="max-w-6xl mb-8" :items="computedPokemonList" />
     <router-view />
   </section>
 </template>

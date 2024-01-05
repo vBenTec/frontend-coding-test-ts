@@ -9,7 +9,26 @@ export interface ResponseAllPokemon extends BaseResponse<{
 }> {
 }
 
-export interface ResponsePokemon extends BaseResponse<Pokemon>
+export interface ResponsePokemon extends BaseResponse<Pokemon> {
+}
+
+export interface Move {
+  move: {
+    name: string;
+    url: string;
+  };
+  version_group_details: {
+    level_learned_at: number;
+    move_learn_method: {
+      name: string;
+      url: string;
+    };
+    version_group: {
+      name: string;
+      url: string;
+    };
+  }[];
+}
 
 export interface Pokemon {
   abilities: {
@@ -33,11 +52,11 @@ export interface Pokemon {
     };
   }[];
   height: number;
-  held_items: any[]; // You may want to define a specific interface for held items
+  held_items: any[];
   id: number;
   is_default: boolean;
   location_area_encounters: string;
-  moves: any[]; // You may want to define a specific interface for moves
+  moves: Move[];
   name: string;
   order: number;
   past_abilities: any[]; // You may want to define a specific interface for past abilities

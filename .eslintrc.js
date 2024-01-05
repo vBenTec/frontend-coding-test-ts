@@ -74,8 +74,8 @@ module.exports = {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       },
       alias: {
-        map: [['@', './src']],
-        extensions: ['.ts', '.js', '.jsx', '.json'],
+        map: [['@', './src'], ['@api', './api']],
+        extensions: ['.ts'],
       },
     },
     // Adding typescript file types, because airbnb doesn't allow this by default.

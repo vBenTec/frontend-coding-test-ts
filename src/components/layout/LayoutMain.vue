@@ -23,10 +23,9 @@ const pageLinks = [
                 :key="`link-${index}`"
                 :to="{name:link.routeName}"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                exact-active-class="bg-gray-900 text-white"
+                :class="{ 'bg-gray-900 text-white': $route.name.includes(link.routeName)}"
               >{{ link.name }}
-              </router-link
-              >
+              </router-link>
             </div>
           </div>
         </div>

@@ -60,19 +60,21 @@ const getIcon = (name: Name) => {
           <img class="w-full h-full object-center block" :src="value" alt="back">
         </div>
       </div>
-      <ul class="max-w-[15rem] mx-auto font-bold text-gray-900">
-        <li v-for="(stat, index) in stats" :key="stat.base_stat + index">
-          <dl class="flex justify-between">
-            <dt class="flex items-center gap-2">
-              <base-icon class="text-gray-600" scale="1.5" :name="getIcon(stat.stat['name'])" />
-              <span>
-              {{ stat.stat['name'][0].toUpperCase()+  stat.stat['name'].slice(1)}}
+      <div class="bg-logo-yellowish-dark rounded-lg p-4">
+        <ul class="mx-auto max-w-[15rem] font-bold text-gray-900">
+          <li v-for="(stat, index) in stats" :key="stat.base_stat + index">
+            <dl class="flex justify-between">
+              <dt class="flex items-center gap-2">
+                <base-icon class="text-gray-700" scale="1.5" :name="getIcon(stat.stat['name'])" />
+                <span>
+              {{ stat.stat['name'][0].toUpperCase() + stat.stat['name'].slice(1) }}
               </span>
-            </dt>
-            <dd>{{ stat.base_stat }}</dd>
-          </dl>
-        </li>
-      </ul>
+              </dt>
+              <dd>{{ stat.base_stat }}</dd>
+            </dl>
+          </li>
+        </ul>
+      </div>
 
       <footer>
 
@@ -105,7 +107,7 @@ const getIcon = (name: Name) => {
 <style scoped lang="postcss">
 .pokemon-card {
   :deep(.card__side) {
-    box-shadow: 0 0 0 1rem lightgray;
+    @apply outline outline-8 outline-gray-300 bg-gradient-to-br from-logo-yellowish-base to-logo-yellowish-light;
   }
 }
 </style>

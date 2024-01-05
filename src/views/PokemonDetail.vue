@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useApi } from '@/composables/useApi'
 import api from '@api/pokemon.ts'
 import { onBeforeRouteUpdate } from 'vue-router'

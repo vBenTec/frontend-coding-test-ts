@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Pokemon } from '@/types/pokemonApi.ts'
+import type { Pokemon } from '@/types/pokemonApi'
 import BaseCard from '@/components/library/BaseCard.vue'
 import CardFrontside from '@/components/pokemon/PokemonCard/CardFrontside.vue'
 import CardBackside from '@/components/pokemon/PokemonCard/CardBackside.vue'
@@ -13,7 +13,7 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <base-card class="pokemon-card" :disable-hover="frontSideOnly" size="lg">
+  <base-card class="pokemon-card" v-bind:disable-hover="frontSideOnly" size="lg">
     <template #front-side>
       <card-frontside v-bind="props" />
     </template>

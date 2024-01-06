@@ -27,7 +27,7 @@
                 class="text-blue-600 hover:text-blue-800 cursor-pointer"
                 href="https://github.com/APIs-guru/graphql-apis"
                 target="_blank"
-                >Public GraphQL-API Collection</a
+              >Public GraphQL-API Collection</a
               >
               (e.g.
               <a
@@ -59,7 +59,7 @@
           <a
             class="text-blue-600 hover:text-blue-800 cursor-pointer"
             v-on:click="showNextExercise('second')"
-            >{{
+          >{{
               showExercise.second
                 ? 'Hide the next exercise'
                 : 'Show the next exercise'
@@ -108,7 +108,7 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { ShowExercises } from '../types/exercise'
+import { ShowExercises } from '@/types/exercise'
 
 const showExercise = reactive<ShowExercises>({
   second: false,

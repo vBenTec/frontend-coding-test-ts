@@ -4,8 +4,8 @@ import BaseList from '@/components/library/BaseList.vue'
 import PokemonItem from '@/components/pokemon/PokemonItem.vue'
 import LoadingSpinner from '@/components/library/LoadingSpinner.vue'
 // ************* import COMPOSABLES ************* //
-import api from '@api/pokemon.ts'
-import { useApi } from '@/composables/useApi.ts'
+import api from '@api/pokemon'
+import { useApi } from '@/composables/useApi'
 // ************* import UTILS & HELPERS ************* //
 import { computed, onMounted, ref } from 'vue'
 import { addIcons } from 'oh-vue-icons'
@@ -26,20 +26,21 @@ const computedPokemonList = computed(() => {
   // Create dependency to update when icons are resolved
   // Only use-case !
   return pokemonIconList.value ? pokemonList.value.map((item) => ({
-    id: item.name + Math.random() * 1000,
-    component: PokemonItem,
-    link: {
-      name: 'PokemonDetail',
-      params: {
-        id: item.name,
-      },
-    },
-    attrs: {
-      icon: `pi-${item.name}`,
-      name: item.name,
-      url: item.url,
-    },
-  })) : []
+        id: item.name + Math.random() * 1000,
+        component: PokemonItem,
+        link: {
+          name: 'PokemonDetail',
+          params: {
+            id: item.name,
+          },
+        },
+        attrs: {
+          icon: `pi-${item.name}`,
+          name: item.name,
+          url: item.url,
+        },
+      }))
+    : []
 })
 
 // ************* COMPOSABLES ************* //
@@ -60,7 +61,9 @@ onMounted(async () => {
 
     // contains more properties than just the name
     const iconList: { name: string }[] = pokemonList.value.map((pokemon) => {
-      const iconName = `Pi${pokemon.name[0].toUpperCase() + pokemon.name.slice(1)}`
+      const iconName = `Pi${
+        pokemon.name[0].toUpperCase() + pokemon.name.slice(1)
+      }`
       return icons[iconName]
     })
     addIcons(...iconList)

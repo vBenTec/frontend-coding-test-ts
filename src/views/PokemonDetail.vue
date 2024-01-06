@@ -6,12 +6,15 @@ import BaseSwitch from '@/components/library/BaseSwitch.vue'
 
 // ************* import UTILS ************* //
 import { onMounted, ref } from 'vue'
-import { useApi } from '@/composables/useApi'
 import { onBeforeRouteUpdate } from 'vue-router'
-import api from '@api/pokemon.ts'
+import api from '@api/pokemon'
+
+// ************* import COMPOSABLES ************* //
+import { useApi } from '@/composables/useApi'
 
 // ************* import TYPES ************* //
 import type { Pokemon } from '@/types/pokemonApi'
+import type { RouteLocation } from 'vue-router'
 
 // ************* TYPES ************* //
 interface Props {
@@ -30,13 +33,16 @@ const { callApi, isFetching } = useApi()
 
 // ************* FUNCTIONS | METHODS ************* //
 const fetchPokemon = async (id: string) => {
-  const res = await callApi(() => {
-    return api.getPokemon(id)
-  }, {
-    successMsg: `Pokemon ${id} loaded`,
-    errorMsg: `💥Pokemon ${id} could not get loaded. Please try again later.`,
-    cache: { id: 'pokemon-' + id, type: 'local' },
-  })
+  const res = await callApi(
+    () => {
+      return api.getPokemon(id)
+    },
+    {
+      successMsg: `Pokemon ${id} loaded`,
+      errorMsg: `💥We could not get the Pokemon ${id}. Please try again later.`,
+      cache: { id: `pokemon-${id}`, type: 'local' },
+    },
+  )
 
   if (res.status === 200) {
     activePokemon.value = res.data
@@ -48,22 +54,26 @@ onMounted(async () => {
   await fetchPokemon(props.id)
 })
 
-onBeforeRouteUpdate(async (to) => {
-  await fetchPokemon(to.params.id)
+onBeforeRouteUpdate(async (to: RouteLocation) => {
+  await fetchPokemon(<string>to.params.id)
 })
-
 </script>
 
 <template>
   <section class="flex flex-col items-center">
-    <base-switch class="mb-8" label="Don't show backside of card" v-model="frontSideOnly" />
-    <pokemon-card class="w-[30rem] h-[50rem] !shadow-none" v-if="activePokemon && !isFetching"
-                  :front-side-only="frontSideOnly" v-bind="activePokemon" />
+    <base-switch
+      v-model="frontSideOnly"
+      class="mb-8"
+      label="Don't show backside of card"
+    />
+    <pokemon-card
+      v-if="activePokemon && !isFetching"
+      class="w-[30rem] h-[50rem] !shadow-none"
+      v-bind:front-side-only="frontSideOnly"
+      v-bind="activePokemon"
+    />
     <loading-spinner v-else-if="isFetching" />
     <p v-else>Could not get pokemon !</p>
   </section>
 </template>
 
-<style scoped>
-
-</style>

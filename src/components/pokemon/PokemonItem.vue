@@ -1,14 +1,12 @@
 <script setup lang="ts">
 // ************* PROPS ************* //
-import { ref } from 'vue'
-
 defineProps<{ name: string, url: string, icon: string }>()
 </script>
 
 <template>
   <dl class="">
     <dt class="title">
-      <base-icon scale="1.4" :name="icon" />
+      <base-icon v-if="icon" scale="1.4" :name="icon" />
       <span>
       {{ name }}
       </span>

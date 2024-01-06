@@ -2,7 +2,15 @@
 import MagicIcon from '@/components/library/MagicIcon.vue'
 import type { Pokemon } from '@/types/pokemonApi.ts'
 import usePokemon from '@/composables/usePokemon'
+import { v4 as uuidv4 } from 'uuid'
+
 // ************* TYPES ************* //
+type Name = 'hp' | 'attack' | 'defense' | 'special-attack' | 'special-defense' | 'speed'
+
+interface Image {
+  [key: string]: string;
+}
+
 // ************* PROPS ************* //
 const props = defineProps<Pokemon>()
 
@@ -11,7 +19,7 @@ const { getImages } = usePokemon()
 
 
 // ************* FUNCTIONS | METHODS ************* //
-const getIcon = (name: string) => {
+const getIcon = (name: Name) => {
   switch (name) {
     case 'hp':
       return 'gi-health-potion'
@@ -71,13 +79,14 @@ const getTypeIcon = (type: string) => {
   </header>
 
   <div v-bind="$attrs" class="flex justify-center border rounded-lg mb-6" role="list">
-    <div role="listitem" class="h-40" v-for="(value, key) in getImages(sprites, 'front')" :key="key">
+    <div role="listitem" class="h-40" v-for="(value, key) in getImages(sprites, 'front')"
+         :key="uuidv4()">
       <img class="w-full h-full object-center block" :src="value" alt="back">
     </div>
   </div>
   <div class="bg-logo-yellowish-dark rounded-lg p-4 mb-auto">
     <ul class="mx-auto max-w-[15rem] font-bold text-gray-900">
-      <li v-for="(stat, index) in stats" :key="stat.base_stat + index">
+      <li v-for="(stat, index) in stats" :key="uuidv4()">
         <dl class="flex justify-between">
           <dt class="flex items-center gap-2">
             <base-icon class="text-gray-700" scale="1.5" :name="getIcon(stat.stat['name'])" />
@@ -92,14 +101,10 @@ const getTypeIcon = (type: string) => {
   <footer v-bind="$attrs" class="flex gap-3 justify-center items-center">
     <div v-if="getTypes(types)" class="flex gap-8">
       <magic-icon v-for="(t, index) in getTypes(types)"
-                  :key="t + index" styling="light-gray" class="flex-col mb-5 w-20 h-20"
+                  :key="uuidv4() + index" styling="light-gray" class="flex-col mb-5 w-20 h-20"
                   :icon="{name:t.icon, scale: 1.4}">
         <span class='font-medium'>{{ t.type[0].toUpperCase() + t.type.slice(1) }}</span>
       </magic-icon>
     </div>
   </footer>
 </template>
-
-<style scoped lang="postcss">
-
-</style>

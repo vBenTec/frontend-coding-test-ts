@@ -1,4 +1,14 @@
 <script lang="ts" setup>
+// ************* TYPES ************* //
+interface Props {
+  id: string
+}
+
+// ************* PROPS ************* //
+withDefaults(defineProps<Props>(), {
+  id: '',
+})
+
 const pageLinks = [
   { name: 'Home', routeName: 'Home' },
   { name: 'Pokemon', routeName: 'Pokemon' },

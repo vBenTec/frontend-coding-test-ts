@@ -56,7 +56,7 @@ const props = defineProps<Props>()
 }
 
 input:checked + .slider {
-  background-color: #101010;
+  @apply bg-purple-800;
 }
 
 input:focus + .slider {

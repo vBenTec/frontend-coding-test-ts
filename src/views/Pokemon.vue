@@ -17,9 +17,11 @@ defineOptions({
   },
 })
 
+// ************* local STATE ************* //
 const pokemonList = ref<{ name: string, url: string }[]>([])
-const pokemonIconList = ref([])
+const pokemonIconList = ref<{ name: string }[]>([])
 
+// ************* GETTERS ************* //
 const computedPokemonList = computed(() => {
   // Create dependency to update when icons are resolved
   // Only use-case !
@@ -40,25 +42,29 @@ const computedPokemonList = computed(() => {
   })) : []
 })
 
+// ************* COMPOSABLES ************* //
 const { isFetching, error, callApi } = useApi()
 
+// ************* LIFE CYCLE HOOKS ************* //
 onMounted(async () => {
   if (pokemonList.value.length > 0) return
 
   const res = await callApi(api.getAllPokemon, {
     successMsg: 'Pokemon list is available',
-    cache: { id: 'pokemon-all' },
+    cache: { id: 'pokemon-all', type: 'local' },
   })
 
   if (res.status === 200) {
     pokemonList.value = res.data.results
     const icons = await import(`oh-vue-icons/icons`)
 
-    const iconList = pokemonList.value.map((pokemon) => {
+    // contains more properties than just the name
+    const iconList: { name: string }[] = pokemonList.value.map((pokemon) => {
       const iconName = `Pi${pokemon.name[0].toUpperCase() + pokemon.name.slice(1)}`
       return icons[iconName]
     })
     addIcons(...iconList)
+
     // Just used to create a dependency to recompute when icons are resolved
     pokemonIconList.value = iconList
   }
@@ -70,17 +76,9 @@ onMounted(async () => {
 <template>
   <section class="px-4 flex flex-col items-center">
     <h1 class="mb-8">A list of available Pokemon's</h1>
-    <base-list v-if="!isFetching" class="max-w-7xl mb-8" :items="computedPokemonList" />
+    <base-list v-if="!isFetching && pokemonIconList?.length" class="max-w-7xl mb-8" :items="computedPokemonList" />
     <loading-spinner v-if="isFetching" />
     <p v-if="error && !isFetching">Could not get pokemon list !</p>
-    <router-view v-slot="{ Component }">
-      <transition mode="out-in" name="fade">
-        <component :is="Component" />
-      </transition>
-    </router-view>
+    <router-view v-if="pokemonIconList?.length" />
   </section>
 </template>
-
-<style scoped>
-
-</style>

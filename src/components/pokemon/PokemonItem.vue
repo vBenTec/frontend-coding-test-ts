@@ -7,7 +7,7 @@ const props = defineProps<{ name: string, url: string, icon: string }>()
 const route = useRoute()
 
 const isActiveRoute = computed(() =>
-  route.params.id.toString().toLowerCase() === props.name.toLowerCase(),
+  route.params.id?.toString()?.toLowerCase() === props.name.toLowerCase(),
 )
 </script>
 

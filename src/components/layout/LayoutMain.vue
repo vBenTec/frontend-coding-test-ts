@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 // ************* TYPES ************* //
 interface Props {
-  id: string
+  id?: string
 }
 
 // ************* PROPS ************* //

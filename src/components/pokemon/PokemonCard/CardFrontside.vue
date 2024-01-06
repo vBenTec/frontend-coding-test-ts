@@ -1,11 +1,15 @@
 <script setup lang="ts">
+// ************* import COMPONENTS ************* //
 import MagicIcon from '@/components/library/MagicIcon.vue'
-import type { Pokemon } from '@/types/pokemonApi'
+// ************* import COMPOSABLES ************* //
 import usePokemon from '@/composables/usePokemon'
+// ************* import UTILS & HELPERS ************* //
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { v4 as uuidv4 } from 'uuid'
 import { getIcon, getTypes } from '@/utils/getHelpers'
 import { capitalizeLetter } from '@/utils/stringHelpers'
+// ************* import TYPES ************* //
+import type { Pokemon } from '@/types/pokemonApi'
 
 // ************* PROPS ************* //ƒ
 defineProps<Pokemon>()
@@ -59,7 +63,7 @@ const { getImages } = usePokemon()
         class="flex-col mb-5 w-20 h-20"
         v-bind:icon="{ name: t.icon, scale: 1.4 }"
       >
-        <span class="font-medium">{{ capitalizeLetter(t.type[0]) }}</span>
+        <span class="font-medium">{{ capitalizeLetter(t.type) }}</span>
       </magic-icon>
     </div>
   </footer>

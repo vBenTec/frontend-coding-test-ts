@@ -64,7 +64,7 @@ onBeforeRouteUpdate(async (to: RouteLocation) => {
     <base-switch
       v-model="frontSideOnly"
       class="mb-8"
-      label="Don't show backside of card"
+      label="Don't show more infos"
     />
     <pokemon-card
       v-if="activePokemon && !isFetching"

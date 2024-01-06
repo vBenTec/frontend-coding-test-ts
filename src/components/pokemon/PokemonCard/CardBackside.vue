@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import type { Pokemon } from '@/types/pokemonApi.ts'
+// ************* import COMPOSABLES ************* //
 import usePokemon from '@/composables/usePokemon'
+// ************* import UTILS & HELPERS ************* //
 import { v4 as uuidv4 } from 'uuid'
+// ************* import TYPES ************* //
+import type { Pokemon } from '@/types/pokemonApi.ts'
 
-const props = defineProps<Pokemon>()
+// ************* PROPS ************* //
+defineProps<Pokemon>()
 
+// ************* COMPOSABLES ************* //
 const { getImages } = usePokemon()
 </script>
 

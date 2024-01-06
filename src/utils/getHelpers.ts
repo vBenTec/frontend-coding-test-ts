@@ -1,4 +1,6 @@
 // ************* TYPES ************* //
+import type { Pokemon, Type } from '@/types/pokemonApi'
+
 type Name = 'hp' | 'attack' | 'defense' | 'special-attack' | 'special-defense' | 'speed'
 type PokemonTypes = 'water' | 'earth' | 'flying' | 'grass' | 'poison' | 'fire' | 'bug' | 'normal'
 type PokemonTypeWithIcon = { type: PokemonTypes, icon: string }[]
@@ -50,10 +52,21 @@ export const getIcon = <T = Name>(
   }
   return null
 }
-export const getTypes = (types): PokemonTypeWithIcon => {
+export const getTypes = (types: Type[]): PokemonTypeWithIcon => {
   const newTypes: PokemonTypeWithIcon = []
   types.forEach(({ type }) => {
-    if (['earth', 'water', 'flying', 'fire', 'grass', 'normal', 'bug', 'poison'].includes(type.name)) {
+    if (
+      [
+        'earth',
+        'water',
+        'flying',
+        'fire',
+        'grass',
+        'normal',
+        'bug',
+        'poison',
+      ].includes(type.name)
+    ) {
       newTypes.push({
         type: type.name,
         icon: getIcon<PokemonTypes>(type.name, 'element') as string,

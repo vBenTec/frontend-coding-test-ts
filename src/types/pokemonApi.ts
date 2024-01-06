@@ -1,17 +1,3 @@
-interface BaseResponse<T> {
-  status: number,
-  data: T
-}
-
-export interface ResponseAllPokemon extends BaseResponse<{
-  name: string
-  url: string
-}> {
-}
-
-export interface ResponsePokemon extends BaseResponse<Pokemon> {
-}
-
 export interface Move {
   move: {
     name: string;
@@ -28,6 +14,14 @@ export interface Move {
       url: string;
     };
   }[];
+}
+
+export interface Type {
+  slot: number;
+  type: {
+    name: string;
+    url: string;
+  };
 }
 
 export interface Pokemon {
@@ -81,12 +75,21 @@ export interface Pokemon {
       url: string;
     };
   }[];
-  types: {
-    slot: number;
-    type: {
-      name: string;
-      url: string;
-    };
-  }[];
+  types: Type[];
   weight: number;
 }
+
+interface BaseResponse<T> {
+  status: number,
+  data: T
+}
+
+export interface ResponseAllPokemon extends BaseResponse<{
+  name: string
+  url: string
+}> {
+}
+
+export interface ResponsePokemon extends BaseResponse<Pokemon> {
+}
+

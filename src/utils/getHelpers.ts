@@ -1,5 +1,5 @@
 // ************* TYPES ************* //
-import type { Pokemon, Type } from '@/types/pokemonApi'
+import type { Type } from '@/types/pokemonApi'
 
 type Name = 'hp' | 'attack' | 'defense' | 'special-attack' | 'special-defense' | 'speed'
 type PokemonTypes = 'water' | 'earth' | 'flying' | 'grass' | 'poison' | 'fire' | 'bug' | 'normal'

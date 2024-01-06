@@ -22,7 +22,7 @@ withDefaults(defineProps<Props>(), {
     <slot>
       <li v-for="(item, index) in items" :key="item.id || (index + uuidv4())">
         <router-link v-if="item.link" :to="{...item.link}">
-          <component :is="item.component" v-bind="item.attrs || {}" v-on="item.events || {}" />
+          <component v-bind:is="item.component" v-bind="item.attrs || {}" v-on="item.events || {}" />
         </router-link>
         <component v-else :is="item.component" v-bind="item.attrs || {}" v-on="item.events || {}" />
       </li>

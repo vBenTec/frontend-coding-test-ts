@@ -1,25 +1,27 @@
+<template>
+  <div v-bind:class="['icon-wrapper', `icon-wrapper--${styling}`]">
+    <base-icon
+      v-bind:class="[`icon-wrapper__icon--${styling}`]"
+      v-bind:name="icon.name"
+      v-bind:scale="icon.scale || 1"
+    />
+    <slot/>
+  </div>
+</template>
+
 <script setup lang="ts">
 interface Props {
   icon: {
-    name: string,
-    scale?: number,
-  },
+    name: string
+    scale?: number
+  }
   styling?: 'light-gray'
 }
 
 withDefaults(defineProps<Props>(), {
   styling: 'light-gray',
 })
-
 </script>
-
-<template>
-  <div :class="['icon-wrapper', `icon-wrapper--${styling}`]">
-    <base-icon :class="[`icon-wrapper__icon--${styling}`]"
-               :name="icon.name" :scale="icon.scale || 1" />
-    <slot></slot>
-  </div>
-</template>
 
 <style lang="postcss" scoped>
 .icon-wrapper {
@@ -40,7 +42,6 @@ withDefaults(defineProps<Props>(), {
 
   &--light-gray::before {
     @apply w-[80%] h-[80%] -z-10 bg-gray-100;
-
   }
 
   &--light-gray::after {

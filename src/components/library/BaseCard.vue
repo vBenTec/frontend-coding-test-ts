@@ -1,3 +1,29 @@
+<template>
+  <component
+    v-bind:is="tag"
+    class="card"
+    v-bind:class="[
+      {
+        'card--interactive':
+          $slots['front-side'] &&
+          $slots['front-side']()?.length > 0 &&
+          $slots['back-side'] &&
+          $slots['back-side']()?.length > 0,
+      },
+      { 'card--interactive-hover': !disableHover },
+    ]"
+  >
+    <slot>
+      <div class="card__side card__side--front" v-bind:class="[size? `size--${size}`: '' ]">
+        <slot name="front-side" />
+      </div>
+      <div class="card__side card__side--back card__side--back-2" v-bind:class="[size? `size--${size}`: '' ]">
+        <slot name="back-side" />
+      </div>
+    </slot>
+  </component>
+</template>
+
 <script setup lang="ts">
 // ************* TYPES ************* //
 interface Props {
@@ -11,20 +37,6 @@ withDefaults(defineProps<Props>(), {
   tag: 'div',
 })
 </script>
-
-<template>
-  <component :is="tag" class="card"
-             :class="[{'card--interactive':  ($slots['front-side']&& $slots['front-side']()?.length > 0) && ($slots['back-side']&& $slots['back-side']()?.length > 0)}, {'card--interactive-hover': !disableHover}]">
-    <slot>
-      <div class="card__side card__side--front" :class="[size? `size--${size}`: '' ]">
-        <slot name="front-side" />
-      </div>
-      <div class="card__side card__side--back card__side--back-2" :class="[size? `size--${size}`: '' ]">
-        <slot name="back-side" />
-      </div>
-    </slot>
-  </component>
-</template>
 
 <style scoped lang="postcss">
 .card {

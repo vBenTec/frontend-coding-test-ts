@@ -1,18 +1,3 @@
-<script setup lang="ts">
-// ************* import COMPOSABLES ************* //
-import usePokemon from '@/composables/usePokemon'
-// ************* import UTILS & HELPERS ************* //
-import { v4 as uuidv4 } from 'uuid'
-// ************* import TYPES ************* //
-import type { Pokemon } from '@/types/pokemonApi.ts'
-
-// ************* PROPS ************* //
-defineProps<Pokemon>()
-
-// ************* COMPOSABLES ************* //
-const { getImages } = usePokemon()
-</script>
-
 <template>
   <base-icon class="mx-auto mb-4" scale="4" v-bind:name="`pi-${name}`" />
   <div
@@ -37,12 +22,12 @@ const { getImages } = usePokemon()
     class="grid grid-cols-2 bg-logo-yellowish-dark rounded-lg p-4 mb-auto font-bold text-gray-900"
   >
     <dt>Height</dt>
-    <dd>{{ height }}</dd>
+    <dd data-test="height">{{ height }}</dd>
     <dt>Weight</dt>
-    <dd>{{ weight }}</dd>
+    <dd data-test="weight">{{ weight }}</dd>
   </dl>
   <h3>Moves</h3>
-  <ul class="max-h-48 overflow-auto flex flex-wrap gap-3">
+  <ul class="max-h-48 overflow-auto flex flex-wrap gap-3" data-test="moves-container">
     <li
       v-for="(m, index) in moves"
       v-bind:key="uuidv4() + index"
@@ -54,7 +39,7 @@ const { getImages } = usePokemon()
     </li>
   </ul>
   <h3>Abilities</h3>
-  <ul class="max-h-48 overflow-auto flex flex-wrap gap-3">
+  <ul class="max-h-48 overflow-auto flex flex-wrap gap-3" data-test="abilities-container">
     <li
       v-for="(a, index) in abilities"
       v-bind:key="a.ability.name + index"
@@ -66,5 +51,21 @@ const { getImages } = usePokemon()
     </li>
   </ul>
 </template>
+
+<script setup lang="ts">
+// ************* import COMPOSABLES ************* //
+import usePokemon from '@/composables/usePokemon'
+// ************* import UTILS & HELPERS ************* //
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { v4 as uuidv4 } from 'uuid'
+// ************* import TYPES ************* //
+import type { Pokemon } from '@/types/pokemonApi'
+
+// ************* PROPS ************* //
+defineProps<Pokemon>()
+
+// ************* COMPOSABLES ************* //
+const { getImages } = usePokemon()
+</script>
 
 <style scoped lang="postcss"></style>

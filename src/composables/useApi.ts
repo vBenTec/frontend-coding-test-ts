@@ -1,16 +1,20 @@
 import { ref } from 'vue'
 import { useToast } from 'vue-toastification'
 
+// eslint-disable-next-line import/prefer-default-export
 export const useApi = () => {
   const isFetching = ref(false)
   const error = ref()
 
   const toast = useToast()
-  const callApi = async (callback: Function, options?: {
-    errorMsg?: string,
-    cache?: { id: string, type?: 'session' | 'local' },
-    successMsg?: string
-  }) => {
+  const callApi = async (
+    callback: <T>() => Promise<T>,
+    options?: {
+      errorMsg?: string
+      cache?: { id: string; type?: 'session' | 'local' }
+      successMsg?: string
+    },
+  ) => {
     try {
       isFetching.value = true
       // Cache block scope
@@ -32,12 +36,19 @@ export const useApi = () => {
       // Callback for api call
       const res = await callback()
       // Block scope for response handlers
-      if (options?.successMsg) toast.success(options.successMsg)
-
+      if (options?.successMsg) {
+        toast.success(options.successMsg)
+      }
       // Set caching for next time
       // default to session storage
-      if (options?.cache?.id && (options?.cache?.type || 'session') === 'session') sessionStorage.setItem(options.cache.id, JSON.stringify(res))
-      if (options?.cache?.id && options?.cache?.type === 'local') localStorage.setItem(options.cache.id, JSON.stringify(res))
+      if (
+        options?.cache?.id &&
+        (options?.cache?.type || 'session') === 'session'
+      )
+        sessionStorage.setItem(options.cache.id, JSON.stringify(res))
+      if (options?.cache?.id && options?.cache?.type === 'local') {
+        localStorage.setItem(options.cache.id, JSON.stringify(res))
+      }
       return res
     } catch (e) {
       error.value = e

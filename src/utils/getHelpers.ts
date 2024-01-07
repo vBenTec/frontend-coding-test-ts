@@ -1,9 +1,25 @@
 // ************* TYPES ************* //
 import type { Type } from '@/types/pokemonApi'
 
-type Name = 'hp' | 'attack' | 'defense' | 'special-attack' | 'special-defense' | 'speed'
-type PokemonTypes = 'water' | 'earth' | 'flying' | 'grass' | 'poison' | 'fire' | 'bug' | 'normal'
-type PokemonTypeWithIcon = { type: PokemonTypes, icon: string }[]
+type Name =
+  | 'hp'
+  | 'attack'
+  | 'defense'
+  | 'special-attack'
+  | 'special-defense'
+  | 'speed'
+  | string
+type PokemonTypes =
+  | 'water'
+  | 'earth'
+  | 'flying'
+  | 'grass'
+  | 'poison'
+  | 'fire'
+  | 'bug'
+  | 'normal'
+  | string
+type PokemonTypeWithIcon = { type: PokemonTypes; icon: string }[]
 
 // ************* FUNCTIONS | METHODS ************* //
 export const getIcon = <T = Name>(

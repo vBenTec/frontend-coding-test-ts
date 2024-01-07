@@ -80,7 +80,12 @@ onMounted(async () => {
   <section class="px-4 flex flex-col items-center">
     <h1 class="mb-8">A list of available Pokemon's</h1>
     <nav>
-      <base-list v-if="!isFetching && pokemonIconList?.length" class="max-w-7xl mb-8" :items="computedPokemonList" />
+      <base-list
+        v-if="!isFetching && pokemonIconList?.length"
+        class="max-w-7xl mb-8"
+        v-bind:items="computedPokemonList"
+        data-test="pokemon-list"
+      />
     </nav>
     <loading-spinner v-if="isFetching" />
     <p v-if="error && !isFetching">Could not get pokemon list !</p>

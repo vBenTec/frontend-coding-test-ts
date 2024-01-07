@@ -1,24 +1,26 @@
-<script setup lang="ts">
-const model = defineModel()
+<template>
+  <div class="flex gap-4 items-center">
+    <label class="switch">
+      <input v-model="model" type="checkbox" />
+      <span class="slider round" />
+    </label>
+    <span v-if="label" class="text-base font-medium text-gray-800">{{
+      label
+    }}</span>
+  </div>
+</template>
 
+<script setup lang="ts">
 // ************* TYPES ************* //
 interface Props {
   label?: string
 }
 
 // ************* PROPS ************* //
-const props = defineProps<Props>()
-</script>
+defineProps<Props>()
 
-<template>
-  <div class="flex gap-4 items-center">
-    <label class="switch">
-      <input type="checkbox" v-model="model">
-      <div class="slider round"></div>
-    </label>
-    <span class="text-base font-medium text-gray-800" v-if="label">{{ label }}</span>
-  </div>
-</template>
+const model = defineModel()
+</script>
 
 <style scoped lang="postcss">
 .switch {
@@ -45,7 +47,7 @@ const props = defineProps<Props>()
 
 .slider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: 26px;
   width: 26px;
   left: 4px;

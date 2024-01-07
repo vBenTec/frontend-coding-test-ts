@@ -30,11 +30,15 @@ const pageLinks = [
             <div class="flex space-x-4">
               <router-link
                 v-for="(link, index) in pageLinks"
-                :key="`link-${index}`"
-                :to="{name:link.routeName}"
+                v-bind:key="`link-${index}`"
+                v-bind:to="{ name: link.routeName }"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                :class="{ 'bg-gray-900 text-white': $route.name.includes(link.routeName)}"
-              >{{ link.name }}
+                v-bind:class="{
+                  'bg-gray-900 text-white': $route.name?.includes(
+                    link.routeName,
+                  ),
+                }"
+                >{{ link.name }}
               </router-link>
             </div>
           </div>

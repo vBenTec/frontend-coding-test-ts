@@ -68,12 +68,13 @@ onBeforeRouteUpdate(async (to: RouteLocation) => {
     />
     <pokemon-card
       v-if="activePokemon && !isFetching"
+      data-test="loading-spinner"
       class="w-[30rem] h-[50rem] !shadow-none"
       v-bind:front-side-only="frontSideOnly"
       v-bind="activePokemon"
     />
     <loading-spinner v-else-if="isFetching" />
-    <p v-else>Could not get pokemon !</p>
+    <p data-test="error-message" v-else>Could not get pokemon !</p>
   </section>
 </template>
 

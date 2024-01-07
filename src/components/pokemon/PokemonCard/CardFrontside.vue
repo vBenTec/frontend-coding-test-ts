@@ -20,23 +20,27 @@ const { getImages } = usePokemon()
 
 <template>
   <header v-bind="$attrs" class="flex justify-between">
-    <h2 class="uppercase">{{ species.name }}</h2>
+    <h2 data-test="card-title" class="uppercase">{{ species.name }}</h2>
     <div>
       <span class="font-medium text-[0.6rem]">Exp</span>
-      <span class="text-xl font-bold">
+      <span data-test="experience" class="text-xl font-bold">
         {{ base_experience }}
       </span>
     </div>
   </header>
 
-  <div class="flex justify-center border rounded-lg mb-6" role="list">
+  <div data-test="pokemon-images" class="flex justify-center border rounded-lg mb-6" role="list">
     <div
       v-for="(value, key) in getImages(sprites, 'front')"
       v-bind:key="uuidv4() + key"
       role="listitem"
       class="h-40"
     >
-      <img class="w-full h-full object-center block" v-bind:src="value" alt="back">
+      <img
+        class="w-full h-full object-center block"
+        v-bind:src="value"
+        alt="back"
+      />
     </div>
   </div>
 
@@ -55,7 +59,7 @@ const { getImages } = usePokemon()
   </div>
 
   <footer v-bind="$attrs" class="flex gap-3 justify-center items-center">
-    <div v-if="getTypes(types)" class="flex gap-8">
+    <div v-if="getTypes(types)" data-test="type-icons-container" class="flex gap-8">
       <magic-icon
         v-for="(t, index) in getTypes(types)"
         v-bind:key="uuidv4() + index"

@@ -25,7 +25,8 @@ const pokemonIconList = ref<{ name: string }[]>([])
 const computedPokemonList = computed(() => {
   // Create dependency to update when icons are resolved
   // Only use-case !
-  return pokemonIconList.value ? pokemonList.value.map((item) => ({
+  return pokemonIconList.value
+    ? pokemonList.value.map((item) => ({
         id: item.name + Math.random() * 1000,
         component: PokemonItem,
         link: {
@@ -52,7 +53,7 @@ onMounted(async () => {
 
   const res = await callApi(api.getAllPokemon, {
     successMsg: 'Pokemon list is available',
-    cache: { id: 'pokemon-all', type: 'local' },
+    cache: { id: 'pokemon-all', type: 'session' },
   })
 
   if (res.status === 200) {
@@ -64,8 +65,10 @@ onMounted(async () => {
       const iconName = `Pi${
         pokemon.name[0].toUpperCase() + pokemon.name.slice(1)
       }`
+      // @ts-ignore
       return icons[iconName]
     })
+    // @ts-ignore
     addIcons(...iconList)
 
     // Just used to create a dependency to recompute when icons are resolved

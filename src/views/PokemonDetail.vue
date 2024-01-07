@@ -40,7 +40,7 @@ const fetchPokemon = async (id: string) => {
     {
       successMsg: `Pokemon ${id} loaded`,
       errorMsg: `💥We could not get the Pokemon ${id}. Please try again later.`,
-      cache: { id: `pokemon-${id}`, type: 'local' },
+      cache: { id: `pokemon-${id}`, type: 'session' },
     },
   )
 
